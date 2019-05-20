@@ -1,0 +1,41 @@
+.buttonSelection {
+    list-style-type:none;
+    margin:25px 0 0 0;
+    padding:0;
+}
+
+.buttonSelection li {
+ margin:5px;
+   width:100px;
+   height:40px;
+   position:relative;
+}
+
+.buttonSelection label, .buttonSelection input {
+   display:block;
+   position:absolute;
+   top:0;
+   left:0;
+   right:0;
+   bottom:0;
+}
+
+.buttonSelection input[type="radio"] {
+   opacity:0.011;
+   z-index:100;
+}
+
+.buttonSelection input[type="radio"]:checked + label {
+   background:#BBB;
+}
+
+.buttonSelection label {
+    padding:5px;
+    border:1px solid #CCC; 
+    cursor:pointer;
+   z-index:90;
+}
+
+.buttonSelection label:hover {
+    background:#DDD;
+}

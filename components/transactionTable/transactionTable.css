@@ -1,0 +1,12 @@
+.pagination-wrapper {
+    overflow-x:auto;
+  }
+  
+  .pagination {
+    justify-content: center;
+    margin:30px;
+  }
+  
+  .data-slice {
+    margin-top: 15px;
+  }
