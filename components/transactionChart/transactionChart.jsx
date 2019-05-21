@@ -26,7 +26,7 @@ const transactionChart = ({ summary, fetchSummary }) => {
     return (
         <Row>
             <Col>
-            <LineChart data={summary} />
+            <LineChart data={summary} xtitle="Amount" ytitle="Count" legend="right" />
             </Col>
         </Row>
     )

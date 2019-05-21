@@ -13,6 +13,7 @@ const Index = () => (
       <TransactionTable />
       <br />
       <TransactionChart />
+      <br />
       <style jsx>{`
           h1{
             font-family: 'Arial';

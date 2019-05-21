@@ -10,3 +10,8 @@
   .data-slice {
     margin-top: 15px;
   }
+
+  .scroll-table{
+    height: 315px;   
+    overflow: auto;
+  }

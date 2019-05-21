@@ -89,7 +89,9 @@ const transectionTable = ({ transactions }) => {
                     </Pagination>
 
                 </div>
-                <TableWidget records={paginationData.page} />
+                <div className="scroll-table">
+                    <TableWidget records={paginationData.page} />
+                </div>
             </Col>
         </Row>
     )
