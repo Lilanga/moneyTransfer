@@ -7,7 +7,11 @@ import {
   fetchTransectionRequestFailed, 
   fetchTransectionRequestSuccess, 
   postTransectionRequestFailed, 
-  postTransectionRequestSuccess 
+  postTransectionRequestSuccess, 
+  fetchTransactionSummaryRequestSuccess,
+  fetchTransactionSummaryRequestFailed,
+  FETCH_TRANSACTIONS_SUMMARY_REQUEST,
+  fetchTransactionSummaryRequest
 } from "./actions";
 import fetch from 'isomorphic-unfetch';
 
@@ -22,6 +26,20 @@ function* handleFetchTransections() {
 
   } catch (err) {
     yield put(fetchTransectionRequestFailed(err));
+  }
+}
+
+function* handleFetchTransactionSummary() {
+  try {
+    let data = yield fetch('/api/transections/summary').then((res) => res.json())
+    .catch((err)=>{
+      throw err;
+    });
+
+    yield put(fetchTransactionSummaryRequestSuccess(data));
+
+  } catch (err) {
+    yield put(fetchTransactionSummaryRequestFailed(err));
   }
 }
 
@@ -41,6 +59,7 @@ function* handlePostTransection(action) {
 
     yield put(postTransectionRequestSuccess(data));
     yield put(fetchTransectionRequest());
+    yield put(fetchTransactionSummaryRequest());
   } catch (err) {
     yield put(postTransectionRequestFailed(err));
   }
@@ -53,6 +72,13 @@ function* watchFetchTransectionsRequest() {
   );
 }
 
+function* watchFetchTransactionsSummaryRequest() {
+  yield takeEvery(
+    FETCH_TRANSACTIONS_SUMMARY_REQUEST,
+    handleFetchTransactionSummary,
+  );
+}
+
 function* watchPostTransectionRequest() {
   yield takeEvery(
     POST_TRANSECTIONS_REQUEST,
@@ -61,5 +87,5 @@ function* watchPostTransectionRequest() {
 }
 
 export function* transectionSaga() {
-  yield all([fork(watchPostTransectionRequest), fork(watchFetchTransectionsRequest)]);
+  yield all([fork(watchPostTransectionRequest), fork(watchFetchTransectionsRequest), fork(watchFetchTransactionsSummaryRequest)]);
 }

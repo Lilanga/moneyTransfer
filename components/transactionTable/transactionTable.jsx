@@ -16,7 +16,7 @@ const transectionTable = ({ transactions }) => {
         page: []
     });
 
-    const pageSize = 10;
+    const pageSize = 5;
 
     const handleClick = (e, index) => {
         e.preventDefault();

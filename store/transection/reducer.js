@@ -1,13 +1,15 @@
-import { 
+import {
   FETCH_TRANSECTIONS_REQUEST,
   FETCH_TRANSECTIONS_REQUEST_FAILED,
   FETCH_TRANSECTIONS_REQUEST_SUCCESS,
+  FETCH_TRANSACTIONS_SUMMARY_REQUEST_FAILED,
+  FETCH_TRANSACTIONS_SUMMARY_REQUEST_SUCCESS,
   POST_TRANSECTIONS_REQUEST,
   POST_TRANSECTIONS_REQUEST_FAILED,
   POST_TRANSECTIONS_REQUEST_SUCCESS
- } from './actions';
+} from './actions';
 
-const INITIAL_STATE = { loadError: null, saveError: null, transections: [], isLoading: false, isSaving: false };
+const INITIAL_STATE = { loadError: null, saveError: null, transections: [], isLoading: false, isSaving: false, summary: [] };
 
 export function transectionReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -17,6 +19,10 @@ export function transectionReducer(state = INITIAL_STATE, action) {
       return { ...state, loadError: action.payload, isLoading: false, transections: [] };
     case FETCH_TRANSECTIONS_REQUEST_SUCCESS:
       return { ...state, loadError: null, isLoading: false, transections: action.payload, };
+    case FETCH_TRANSACTIONS_SUMMARY_REQUEST_FAILED:
+      return { ...state, summary: [] };
+    case FETCH_TRANSACTIONS_SUMMARY_REQUEST_SUCCESS:
+      return { ...state, summary: action.payload };
     case POST_TRANSECTIONS_REQUEST:
       return { ...state, isSaving: true, saveError: null };
     case POST_TRANSECTIONS_REQUEST_FAILED:

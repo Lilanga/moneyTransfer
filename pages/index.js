@@ -1,6 +1,7 @@
 import React from 'react';
 import TransactionForm from '../components/transactionForm/transactionForm';
-import TransectionTable from '../components/transactionTable/transactionTable';
+import TransactionTable from '../components/transactionTable/transactionTable';
+import TransactionChart from '../components/transactionChart/transactionChart';
 import Layout from '../components/Layout';
 
 const Index = () => (
@@ -9,9 +10,9 @@ const Index = () => (
       <h1 className="text-center">Money Transfer</h1>
       <br />
       <TransactionForm />
-      <TransectionTable />
+      <TransactionTable />
       <br />
-
+      <TransactionChart />
       <style jsx>{`
           h1{
             font-family: 'Arial';

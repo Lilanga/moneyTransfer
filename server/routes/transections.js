@@ -12,28 +12,68 @@ router.get('/', (_req, res) => {
     });
 });
 
-router.get('/chart', (_req, res) => {
-    Transections.aggregate([{$group : 
+router.get('/summary', (_req, res) => {
+    Transections.aggregate([
         {
-        _id: {mode: "$mode", amount: "$amount"},
-        "amount": {
-          $min:"$amount"
+            $group:
+            {
+                _id: { mode: "$mode" },
+                data: {
+                    $push: {
+                        amount: "$amount"
+                    }
+                }
+            },
         },
-        "total": {
-          $sum: 1
+        {
+            $unwind:
+            {
+                path: "$data"
+            }
+        },
+        {
+            $group:
+            {
+                _id: { mode: "$_id.mode", amount: "$data.amount" },
+                "total": {
+                    $sum: 1
+                }
+            }
+        },
+        {
+            $project:
+            {
+                _id: 0,
+                type: "$_id.mode",
+                data: ["$_id.amount", "$total"],
+            }
+        },
+        {
+            $group:
+            {
+                _id: "$type",
+                data: { $push: "$data" }
+            }
+        },
+        {
+            $project:
+            {
+                _id:1,
+                name:"$_id",
+               data:1,
+             }
         }
-      }
-    }], (err, transections) => {
+    ], (err, transections) => {
         if (err) {
             res.status(500).send(err);
         }
 
-        res.json(transections.map( doc =>
+        res.json(transections.map(doc =>
             Object.assign(
-              doc,
-             { "mode": doc._id.mode }
+                doc,
+                { "mode": doc._id.mode }
             )
-          ));
+        ));
     });
 });
 

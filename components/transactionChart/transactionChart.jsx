@@ -1,16 +1,35 @@
-import { LineChart, Line } from 'recharts';
+import React, { useEffect } from 'react'
 import { Row, Col } from 'reactstrap';
+import { connect } from 'react-redux';
+import { fetchTransactionSummaryRequest } from "../../store/transection";
+import ReactChartkick, { LineChart } from 'react-chartkick'
+import Chart from 'chart.js'
 
-const transactionChart = () => {
+const mapStateToProps = state => ({
+    summary: state.transections.summary,
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchSummary: () => { dispatch(fetchTransactionSummaryRequest()) },
+});
+
+const transactionChart = ({ summary, fetchSummary }) => {
+    ReactChartkick.addAdapter(Chart);
+    const dispatchActions = action => {
+        useEffect(() => {
+            action();
+        }, [])
+    }
+
+    dispatchActions(fetchSummary);
+
     return (
         <Row>
             <Col>
-                <LineChart width={600} height={400}>
-                    <Line type="monotone" dataKey="mode" stroke="#8884d8" />
-                </LineChart>
+            <LineChart data={summary} />
             </Col>
         </Row>
     )
 }
 
-export default transactionChart;
+export default connect(mapStateToProps, mapDispatchToProps)(transactionChart);
